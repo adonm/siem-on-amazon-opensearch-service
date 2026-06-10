@@ -7,7 +7,7 @@ resource "random_id" "suffix" {
 
 locals {
   name                  = var.name
-  collection_group_name = substr("nextgen-${var.collection_name}", 0, 32)
+  collection_group_name = trimsuffix(substr("nextgen-${var.collection_name}", 0, 32), "-")
   log_bucket_name       = var.log_bucket_name != "" ? var.log_bucket_name : "${local.name}-${data.aws_caller_identity.current.account_id}-${var.aws_region}-logs-${random_id.suffix.hex}"
   osis_direct_name      = substr("${local.name}-direct", 0, 28)
   osis_sl_name          = substr("${local.name}-securitylake", 0, 28)

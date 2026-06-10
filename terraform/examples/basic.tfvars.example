@@ -1,0 +1,11 @@
+aws_region = "us-east-1"
+name       = "siem"
+
+# Optional but recommended: grant an admin/break-glass principal direct AOSS access.
+admin_principal_arns = [
+  "arn:aws:iam::123456789012:role/Admin"
+]
+
+# Set false if IAM Identity Center is not enabled yet.
+create_grafana_workspace = true
+manage_grafana_dashboards = true

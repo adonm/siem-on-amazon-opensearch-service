@@ -1,0 +1,7 @@
+enable_security_lake_fallback = true
+
+security_lake_sqs_url = "https://sqs.us-east-1.amazonaws.com/123456789012/AmazonSecurityLake-..."
+security_lake_sqs_arn = "arn:aws:sqs:us-east-1:123456789012:AmazonSecurityLake-..."
+security_lake_bucket_arns = [
+  "arn:aws:s3:::aws-security-data-lake-us-east-1-..."
+]

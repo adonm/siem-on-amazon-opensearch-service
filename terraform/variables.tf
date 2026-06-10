@@ -19,6 +19,11 @@ variable "collection_name" {
   description = "OpenSearch Serverless NextGen collection name."
   type        = string
   default     = "siem-logs"
+
+  validation {
+    condition     = can(regex("^[a-z][a-z0-9-]{2,31}$", var.collection_name))
+    error_message = "collection_name must start with a lowercase letter and contain 3-32 lowercase letters, numbers, or hyphens."
+  }
 }
 
 variable "log_bucket_name" {
@@ -37,24 +42,44 @@ variable "osis_min_units" {
   description = "Minimum OpenSearch Ingestion OCUs per pipeline."
   type        = number
   default     = 1
+
+  validation {
+    condition     = var.osis_min_units >= 1 && var.osis_min_units <= 96
+    error_message = "osis_min_units must be between 1 and 96."
+  }
 }
 
 variable "osis_max_units" {
   description = "Maximum OpenSearch Ingestion OCUs per pipeline."
   type        = number
   default     = 4
+
+  validation {
+    condition     = var.osis_max_units >= 1 && var.osis_max_units <= 96
+    error_message = "osis_max_units must be between 1 and 96."
+  }
 }
 
 variable "osis_direct_codec" {
   description = "Data Prepper S3 source codec for direct S3 ingestion. Use json or ndjson for simplified ingestion."
   type        = string
   default     = "json"
+
+  validation {
+    condition     = contains(["json", "ndjson", "newline"], var.osis_direct_codec)
+    error_message = "osis_direct_codec must be one of json, ndjson, or newline."
+  }
 }
 
 variable "direct_index_prefix" {
   description = "OpenSearch index prefix for the generic direct OSIS pipeline."
   type        = string
   default     = "log-aws-generic"
+
+  validation {
+    condition     = can(regex("^[a-z0-9][a-z0-9-]{1,60}$", var.direct_index_prefix))
+    error_message = "direct_index_prefix must use lowercase letters, numbers, and hyphens."
+  }
 }
 
 variable "enable_security_lake_fallback" {
@@ -85,12 +110,22 @@ variable "security_lake_codec" {
   description = "Data Prepper S3 source codec for Security Lake objects. Security Lake normally uses parquet."
   type        = string
   default     = "parquet"
+
+  validation {
+    condition     = contains(["parquet", "json", "ndjson", "newline"], var.security_lake_codec)
+    error_message = "security_lake_codec must be one of parquet, json, ndjson, or newline."
+  }
 }
 
 variable "security_lake_index_prefix" {
   description = "OpenSearch index prefix for the Security Lake fallback pipeline."
   type        = string
   default     = "log-ocsf-securitylake"
+
+  validation {
+    condition     = can(regex("^[a-z0-9][a-z0-9-]{1,60}$", var.security_lake_index_prefix))
+    error_message = "security_lake_index_prefix must use lowercase letters, numbers, and hyphens."
+  }
 }
 
 variable "create_grafana_workspace" {

@@ -32,20 +32,31 @@ endpoint matrix, and no Lambda log-loader workers.
 ```bash
 cd terraform
 terraform init
-terraform apply \
-  -var='aws_region=us-east-1' \
-  -var='admin_principal_arns=["arn:aws:iam::123456789012:role/Admin"]'
+terraform apply -var-file=examples/basic.tfvars.example
 ```
 
 Security Lake fallback example:
 
 ```bash
 terraform apply \
+  -var-file=examples/basic.tfvars.example \
   -var='enable_security_lake_fallback=true' \
   -var='security_lake_sqs_url=https://sqs.us-east-1.amazonaws.com/123456789012/AmazonSecurityLake-...' \
   -var='security_lake_sqs_arn=arn:aws:sqs:us-east-1:123456789012:AmazonSecurityLake-...' \
   -var='security_lake_bucket_arns=["arn:aws:s3:::aws-security-data-lake-us-east-1-..."]'
 ```
+
+## Day-to-day checks
+
+From the repository root:
+
+```bash
+just check
+just clean
+```
+
+The normal path uses only Terraform providers. No CDK, build scripts, Lambda
+packages, Python importer, or generated CloudFormation templates are required.
 
 ## Intentional simplifications
 

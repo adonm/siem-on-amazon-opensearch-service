@@ -16,5 +16,12 @@ terraform init
 terraform apply
 ```
 
+For local checks:
+
+```bash
+just check
+just clean
+```
+
 See [`terraform/README.md`](terraform/README.md) for variables, Security Lake
 fallback setup, and Grafana dashboard import details.
