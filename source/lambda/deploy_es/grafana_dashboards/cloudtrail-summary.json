@@ -1,0 +1,1537 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {},
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "cloud.account.id",
+              "id": "3",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            },
+            {
+              "field": "cloud.account.id",
+              "id": "4",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "5"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - AWS Account(Bar)",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 2,
+      "options": {},
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "cloud.region",
+              "id": "3",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "5"
+              },
+              "type": "terms"
+            },
+            {
+              "field": "cloud.region",
+              "id": "4",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "5"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - Region(Bar)",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 0,
+        "y": 7
+      },
+      "id": 3,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "source.geo.country_name",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - Source Countries",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 5,
+        "x": 6,
+        "y": 7
+      },
+      "id": 4,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "source.ip",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - Source IP",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 14,
+        "x": 10,
+        "y": 7
+      },
+      "id": 5,
+      "options": {
+        "view": {
+          "id": "zero",
+          "lat": 0,
+          "lon": 0,
+          "zoom": 1
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "source.geo.country_iso_code",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "100"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - Source Countries(Geo)",
+      "type": "geomap"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 14
+      },
+      "id": 6,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "source.as.organization.name",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - Source AS",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 0,
+        "y": 22
+      },
+      "id": 7,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      },
+      "targets": [
+        {
+          "bucketAggs": [],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - Login Failed",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 4,
+        "y": 22
+      },
+      "id": 8,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      },
+      "targets": [
+        {
+          "bucketAggs": [],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - Root Login(CIS3.3)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 7,
+        "y": 22
+      },
+      "id": 9,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      },
+      "targets": [
+        {
+          "bucketAggs": [],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - Unauthorized API Calls(CIS3.1)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 14,
+        "x": 10,
+        "y": 22
+      },
+      "id": 10,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "userIdentity.arn",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - UserIdentity.arn",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 0,
+        "y": 30
+      },
+      "id": 11,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      },
+      "targets": [
+        {
+          "bucketAggs": [],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - Security Group Changed(CIS3.10)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 4,
+        "y": 30
+      },
+      "id": 12,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      },
+      "targets": [
+        {
+          "bucketAggs": [],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - NACL Changed(CIS3.11)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 7,
+        "y": 30
+      },
+      "id": 13,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      },
+      "targets": [
+        {
+          "bucketAggs": [],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - Network Gateway Changd(CIS3.12)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 10,
+        "y": 30
+      },
+      "id": 14,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      },
+      "targets": [
+        {
+          "bucketAggs": [],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - Route Table Changd(CIS3.13)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 14,
+        "y": 30
+      },
+      "id": 15,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      },
+      "targets": [
+        {
+          "bucketAggs": [],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - VPC Changed(CIS3.14)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 18,
+        "y": 30
+      },
+      "id": 16,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      },
+      "targets": [
+        {
+          "bucketAggs": [],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - S3 Bucket Changed(CIS3.8)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 0,
+        "y": 38
+      },
+      "id": 17,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "eventName",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - Event Name(Pie)",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 3,
+        "x": 21,
+        "y": 30
+      },
+      "id": 18,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      },
+      "targets": [
+        {
+          "bucketAggs": [],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - KMS Key Changed",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 16,
+        "x": 8,
+        "y": 38
+      },
+      "id": 19,
+      "options": {},
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "@timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": "0",
+                "trimEdges": "0"
+              },
+              "type": "date_histogram"
+            },
+            {
+              "field": "eventName",
+              "id": "3",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - Event Name(Area)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 0,
+        "y": 47
+      },
+      "id": 20,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "eventType",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - Event Type(Pie)",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 16,
+        "x": 8,
+        "y": 47
+      },
+      "id": 21,
+      "options": {},
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "@timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": "0",
+                "trimEdges": "0"
+              },
+              "type": "date_histogram"
+            },
+            {
+              "field": "eventType",
+              "id": "3",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "5"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - Event Type(Area)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 0,
+        "y": 56
+      },
+      "id": 22,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "errorCode",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - Error Code(Pie)",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 16,
+        "x": 8,
+        "y": 56
+      },
+      "id": 23,
+      "options": {},
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "@timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": "0",
+                "trimEdges": "0"
+              },
+              "type": "date_histogram"
+            },
+            {
+              "field": "errorCode",
+              "id": "3",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - Error Code(Area)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 0,
+        "y": 65
+      },
+      "id": 24,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "eventSource",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - Event Source(Pie)",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 16,
+        "x": 8,
+        "y": 65
+      },
+      "id": 25,
+      "options": {},
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "@timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": "0",
+                "trimEdges": "0"
+              },
+              "type": "date_histogram"
+            },
+            {
+              "field": "eventSource",
+              "id": "3",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - Event Source(Area)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 6,
+        "x": 0,
+        "y": 74
+      },
+      "id": 26,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "tlsDetails.tlsVersion",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "5"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - TLS version",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 6,
+        "x": 6,
+        "y": 74
+      },
+      "id": 27,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "user_agent.name",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "15"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - User Agent Browser",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 11,
+        "x": 13,
+        "y": 74
+      },
+      "id": 28,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "threat.matched.providers",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "CloudTrail - Matched IoC",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 14,
+        "w": 24,
+        "x": 0,
+        "y": 86
+      },
+      "id": 29,
+      "options": {
+        "showLabels": false,
+        "showTime": true,
+        "wrapLogMessage": false
+      },
+      "targets": [
+        {
+          "bucketAggs": [],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "logs"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "search - CloudTrail (cloud.account.id, cloud.region, eventSource, eventName, user.name, source.address)",
+      "type": "logs"
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "tags": [
+    "siem",
+    "converted-from-opensearch-dashboards"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "CloudTrail Summary",
+  "uid": "siem-cloudtrail-summary",
+  "version": 1,
+  "weekStart": ""
+}

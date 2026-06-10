@@ -1,0 +1,1076 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "content": "### ELB - Controls\n\nOpenSearch Dashboards visualization type `input_control_vis` has no automatic Grafana mapping.",
+        "mode": "markdown"
+      },
+      "targets": [],
+      "title": "ELB - Controls",
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 5
+      },
+      "id": 2,
+      "options": {},
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "cloud.account.id",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "20"
+              },
+              "type": "terms"
+            },
+            {
+              "field": "cloud.account.id",
+              "id": "3",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "5"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "ELB - AWS Account(Bar)",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 5
+      },
+      "id": 3,
+      "options": {},
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "cloud.region",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "20"
+              },
+              "type": "terms"
+            },
+            {
+              "field": "cloud.region",
+              "id": "3",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "20"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "ELB - Region(Bar)",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 8,
+        "x": 0,
+        "y": 12
+      },
+      "id": 4,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "http.response.status_code",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "20"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "ELB - HTTP Response Code(PIE)",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 16,
+        "x": 8,
+        "y": 12
+      },
+      "id": 5,
+      "options": {},
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "@timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": "0",
+                "trimEdges": "0"
+              },
+              "type": "date_histogram"
+            },
+            {
+              "field": "http.response.status_code",
+              "id": "3",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "20"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "ELB - HTTP Response Code Trend",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
+      "id": 6,
+      "options": {},
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "@timestamp",
+              "id": "3",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": "0",
+                "trimEdges": "0"
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "field": "http.request.bytes",
+              "id": "1",
+              "meta": {
+                "customLabel": "Request Size"
+              },
+              "type": "sum"
+            },
+            {
+              "field": "http.response.bytes",
+              "id": "2",
+              "meta": {
+                "customLabel": "Response Size"
+              },
+              "type": "sum"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "ELB - Transfer Size(MB)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 6,
+        "x": 0,
+        "y": 35
+      },
+      "id": 7,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "http_protocol",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "20"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "ELB - HTTP Protocol(PIE)",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 6,
+        "x": 6,
+        "y": 35
+      },
+      "id": 8,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "http.request.method",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "20"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "ELB - HTTP Request Method(PIE)",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 6,
+        "x": 12,
+        "y": 35
+      },
+      "id": 9,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "ssl_protocol",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "20"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "ELB - SSL Protocol(PIE)",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 6,
+        "x": 18,
+        "y": 35
+      },
+      "id": 10,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "ssl_cipher",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "20"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "ELB - SSL Cipher",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 5,
+        "x": 0,
+        "y": 47
+      },
+      "id": 11,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "url.domain",
+              "id": "3",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "20"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "ELB - URL Domain",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 7,
+        "x": 5,
+        "y": 47
+      },
+      "id": 12,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "url.path",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "20"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "ELB - URL Path",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 12,
+        "x": 12,
+        "y": 47
+      },
+      "id": 13,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "user_agent.original",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "20"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "ELB - User Agent",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 6,
+        "x": 0,
+        "y": 62
+      },
+      "id": 14,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "source.geo.country_name",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "20"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "ELB - Source IP Country",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 21,
+        "w": 18,
+        "x": 6,
+        "y": 62
+      },
+      "id": 15,
+      "options": {
+        "view": {
+          "id": "zero",
+          "lat": 0,
+          "lon": 0,
+          "zoom": 1
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "source.geo.country_iso_code",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "100"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "ELB - Source Countries Geo Map",
+      "type": "geomap"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 6,
+        "x": 0,
+        "y": 73
+      },
+      "id": 16,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "source.ip",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "20"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "ELB - Source IP",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 5,
+        "x": 0,
+        "y": 83
+      },
+      "id": 17,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "destination.ip",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "20"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "ELB - Destination IP",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 19,
+        "x": 5,
+        "y": 83
+      },
+      "id": 18,
+      "options": {},
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "@timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": "0",
+                "trimEdges": "0"
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "field": "request_processing_time",
+              "id": "1",
+              "meta": {
+                "customLabel": "Request"
+              },
+              "type": "avg"
+            },
+            {
+              "field": "response_processing_time",
+              "id": "4",
+              "meta": {
+                "customLabel": "Response"
+              },
+              "type": "avg"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "ELB - Processing TIme",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 24,
+        "x": 0,
+        "y": 98
+      },
+      "id": 19,
+      "options": {
+        "showLabels": false,
+        "showTime": true,
+        "wrapLogMessage": false
+      },
+      "targets": [
+        {
+          "bucketAggs": [],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "logs"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "search - ELB (cloud.account.id, cloud.region, event.module, destination.ip, source.ip, source.geo.country_name, elb_status_code, http_method, http_path, user_agent.original)",
+      "type": "logs"
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "tags": [
+    "siem",
+    "converted-from-opensearch-dashboards"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "ELB Summary",
+  "uid": "siem-elb-summary",
+  "version": 1,
+  "weekStart": ""
+}

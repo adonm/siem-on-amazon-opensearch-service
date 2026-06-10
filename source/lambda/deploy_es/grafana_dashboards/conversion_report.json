@@ -1,0 +1,147 @@
+[
+  {
+    "output": "source/lambda/deploy_es/grafana_dashboards/clientvpn-summary.json",
+    "panels": 20,
+    "source": "source/saved_objects/each-dashboard/clientvpn.ndjson",
+    "title": "ClientVPN - Summary",
+    "unsupported": {}
+  },
+  {
+    "output": "source/lambda/deploy_es/grafana_dashboards/cloudfront-summary.json",
+    "panels": 25,
+    "source": "source/saved_objects/each-dashboard/cloudfront.ndjson",
+    "title": "CloudFront Summary",
+    "unsupported": {}
+  },
+  {
+    "output": "source/lambda/deploy_es/grafana_dashboards/cloudhsm-summary.json",
+    "panels": 17,
+    "source": "source/saved_objects/each-dashboard/cloudhsm.ndjson",
+    "title": "CloudHSM Summary",
+    "unsupported": {
+      "input_control_vis": 1
+    }
+  },
+  {
+    "output": "source/lambda/deploy_es/grafana_dashboards/cloudtrail-summary.json",
+    "panels": 29,
+    "source": "source/saved_objects/each-dashboard/cloudtrail.ndjson",
+    "title": "CloudTrail Summary",
+    "unsupported": {}
+  },
+  {
+    "output": "source/lambda/deploy_es/grafana_dashboards/elb-summary.json",
+    "panels": 19,
+    "source": "source/saved_objects/each-dashboard/elb.ndjson",
+    "title": "ELB Summary",
+    "unsupported": {
+      "input_control_vis": 1
+    }
+  },
+  {
+    "output": "source/lambda/deploy_es/grafana_dashboards/guardduty-summary.json",
+    "panels": 21,
+    "source": "source/saved_objects/each-dashboard/guardduty.ndjson",
+    "title": "GuardDuty Summary",
+    "unsupported": {}
+  },
+  {
+    "output": "source/lambda/deploy_es/grafana_dashboards/opensearch-metrics.json",
+    "panels": 16,
+    "source": "source/saved_objects/each-dashboard/metrics-opensearch.ndjson",
+    "title": "OpenSearch Metrics",
+    "unsupported": {
+      "input_control_vis": 1,
+      "metrics": 4
+    }
+  },
+  {
+    "output": "source/lambda/deploy_es/grafana_dashboards/ocsf-auditactivity-summary.json",
+    "panels": 15,
+    "source": "source/saved_objects/each-dashboard/ocsf-audit.ndjson",
+    "title": "OCSF AuditActivity Summary",
+    "unsupported": {}
+  },
+  {
+    "output": "source/lambda/deploy_es/grafana_dashboards/ocsf-networkactivity-summary.json",
+    "panels": 7,
+    "source": "source/saved_objects/each-dashboard/ocsf-newtwork.ndjson",
+    "title": "OCSF NetworkActivity Summary",
+    "unsupported": {}
+  },
+  {
+    "output": "source/lambda/deploy_es/grafana_dashboards/rds-summary.json",
+    "panels": 13,
+    "source": "source/saved_objects/each-dashboard/rds.ndjson",
+    "title": "RDS Summary",
+    "unsupported": {
+      "input_control_vis": 1,
+      "metrics": 1
+    }
+  },
+  {
+    "output": "source/lambda/deploy_es/grafana_dashboards/s3accesslog-summary.json",
+    "panels": 17,
+    "source": "source/saved_objects/each-dashboard/s3accesslog.ndjson",
+    "title": "S3Accesslog Summary",
+    "unsupported": {}
+  },
+  {
+    "output": "source/lambda/deploy_es/grafana_dashboards/securityhub-summary.json",
+    "panels": 21,
+    "source": "source/saved_objects/each-dashboard/securityhub.ndjson",
+    "title": "SecurityHub Summary",
+    "unsupported": {
+      "input_control_vis": 1
+    }
+  },
+  {
+    "output": "source/lambda/deploy_es/grafana_dashboards/all-threat-hunting.json",
+    "panels": 17,
+    "source": "source/saved_objects/each-dashboard/threat_hunting.ndjson",
+    "title": "All - Threat Hunting",
+    "unsupported": {}
+  },
+  {
+    "output": "source/lambda/deploy_es/grafana_dashboards/vpcflowlogs-summary.json",
+    "panels": 11,
+    "source": "source/saved_objects/each-dashboard/vpcflowlogs.ndjson",
+    "title": "VPCFlowLogs Summary",
+    "unsupported": {}
+  },
+  {
+    "output": "source/lambda/deploy_es/grafana_dashboards/vpcflowlogscustom-summary-with-v5-custom.json",
+    "panels": 28,
+    "source": "source/saved_objects/each-dashboard/vpcflowlogscustom.ndjson",
+    "title": "VPCFlowLogsCustom Summary with v5 custom formats",
+    "unsupported": {}
+  },
+  {
+    "output": "source/lambda/deploy_es/grafana_dashboards/awswaf-summary.json",
+    "panels": 20,
+    "source": "source/saved_objects/each-dashboard/waf.ndjson",
+    "title": "AWSWAF Summary",
+    "unsupported": {
+      "input_control_vis": 1,
+      "timelion": 2
+    }
+  },
+  {
+    "output": "source/lambda/deploy_es/grafana_dashboards/web-summary.json",
+    "panels": 32,
+    "source": "source/saved_objects/each-dashboard/web.ndjson",
+    "title": "Web Summary",
+    "unsupported": {
+      "input_control_vis": 1
+    }
+  },
+  {
+    "output": "source/lambda/deploy_es/grafana_dashboards/workspaces-summary.json",
+    "panels": 13,
+    "source": "source/saved_objects/each-dashboard/workspaces.ndjson",
+    "title": "WorkSpaces - Summary",
+    "unsupported": {
+      "input_control_vis": 1
+    }
+  }
+]

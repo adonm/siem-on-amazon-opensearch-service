@@ -1,0 +1,1772 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {},
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "cloud.account.id",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            },
+            {
+              "field": "cloud.account.id",
+              "id": "3",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - AWS Account(Bar)",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 2,
+      "options": {},
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "cloud.region",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            },
+            {
+              "field": "cloud.region",
+              "id": "3",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - Region(Bar)",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 7
+      },
+      "id": 3,
+      "options": {
+        "content": "### Web - Control Panel\n\nOpenSearch Dashboards visualization type `input_control_vis` has no automatic Grafana mapping.",
+        "mode": "markdown"
+      },
+      "targets": [],
+      "title": "Web - Control Panel",
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 0,
+        "y": 13
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      },
+      "targets": [
+        {
+          "bucketAggs": [],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "meta": {
+                "customLabel": "Access Count"
+              },
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - Access Count",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 10,
+        "x": 8,
+        "y": 13
+      },
+      "id": 5,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "url.scheme",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "2"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - Scheme ",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 5,
+        "x": 19,
+        "y": 13
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      },
+      "targets": [
+        {
+          "bucketAggs": [],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "meta": {
+                "customLabel": "Error Count"
+              },
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - Error Count",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 14,
+        "w": 10,
+        "x": 0,
+        "y": 17
+      },
+      "id": 7,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "http.response.status_code",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "20"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - Response Status Code",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 14,
+        "w": 10,
+        "x": 10,
+        "y": 17
+      },
+      "id": 8,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "http.request.method",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "20"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - Request Method(Pie)",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 5,
+        "x": 19,
+        "y": 17
+      },
+      "id": 9,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "log.level",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - Log Level",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 5,
+        "x": 19,
+        "y": 24
+      },
+      "id": 10,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "apache.error.module",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "20"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - Apache Error Module",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 6,
+        "x": 0,
+        "y": 31
+      },
+      "id": 11,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "source.geo.country_name",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - Source Countries",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 18,
+        "w": 5,
+        "x": 6,
+        "y": 31
+      },
+      "id": 12,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "source.ip",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "20"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - Source IP",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 18,
+        "w": 14,
+        "x": 10,
+        "y": 31
+      },
+      "id": 13,
+      "options": {
+        "view": {
+          "id": "zero",
+          "lat": 0,
+          "lon": 0,
+          "zoom": 1
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "source.geo.country_iso_code",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "100"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - Source Countries(Geo)",
+      "type": "geomap"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 6,
+        "x": 0,
+        "y": 40
+      },
+      "id": 14,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "source.as.organization.name",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - Source AS",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 49
+      },
+      "id": 15,
+      "options": {},
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "http.request.method",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            },
+            {
+              "field": "@timestamp",
+              "id": "3",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": "0",
+                "trimEdges": "0"
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - Request Method / Date Histogram",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 49
+      },
+      "id": 16,
+      "options": {},
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "@timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": "0",
+                "trimEdges": "0"
+              },
+              "type": "date_histogram"
+            },
+            {
+              "field": "http.response.status_code",
+              "id": "3",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "8"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - Status Code / Date Histogram",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 20,
+        "x": 0,
+        "y": 59
+      },
+      "id": 17,
+      "options": {},
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "http.request.method",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "6"
+              },
+              "type": "terms"
+            },
+            {
+              "field": "http.response.status_code",
+              "id": "3",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "8"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - Heatmap (Request / Response)",
+      "type": "heatmap"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 4,
+        "x": 20,
+        "y": 59
+      },
+      "id": 18,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "url.extension",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "20"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - URL Extension",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 18,
+        "w": 6,
+        "x": 0,
+        "y": 74
+      },
+      "id": 19,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "url.domain",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "100"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - URL Domain",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 18,
+        "w": 9,
+        "x": 6,
+        "y": 74
+      },
+      "id": 20,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "url.path",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "200"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - URL Path",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 18,
+        "w": 10,
+        "x": 14,
+        "y": 74
+      },
+      "id": 21,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "url.query",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "30"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - URL Query String",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 18,
+        "w": 9,
+        "x": 0,
+        "y": 92
+      },
+      "id": 22,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "user_agent.original",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "20"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - User Agent Original",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 18,
+        "w": 10,
+        "x": 9,
+        "y": 92
+      },
+      "id": 23,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "http.request.referrer",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "50"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - Referer",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 18,
+        "w": 5,
+        "x": 19,
+        "y": 92
+      },
+      "id": 24,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "cloud.instance.id",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "100"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - EC2 Instance",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 14,
+        "w": 8,
+        "x": 0,
+        "y": 110
+      },
+      "id": 25,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "user_agent.os.name",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - User Agent OS Name",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 14,
+        "w": 8,
+        "x": 8,
+        "y": 110
+      },
+      "id": 26,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "user_agent.device.name",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "20"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - User Agent Device Name",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 14,
+        "w": 8,
+        "x": 16,
+        "y": 110
+      },
+      "id": 27,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "user_agent.name",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "20"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - User Agent Name",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 18,
+        "w": 11,
+        "x": 0,
+        "y": 124
+      },
+      "id": 28,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "threat.matched.providers",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "30"
+              },
+              "type": "terms"
+            },
+            {
+              "field": "threat.matched.names",
+              "id": "3",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "30"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "meta": {
+                "customLabel": "Count"
+              },
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - IoC matched Provider",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 18,
+        "w": 6,
+        "x": 11,
+        "y": 124
+      },
+      "id": 29,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "threat.matched.indicators",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "30"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "meta": {
+                "customLabel": "Count"
+              },
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - IoC Matched IP Address",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 18,
+        "w": 7,
+        "x": 17,
+        "y": 124
+      },
+      "id": 30,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "source.ip",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "30"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "field": "http.response.body.bytes",
+              "id": "1",
+              "meta": {
+                "customLabel": "Bytes"
+              },
+              "type": "sum"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Web - Response Size by Source IP",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 21,
+        "w": 24,
+        "x": 0,
+        "y": 142
+      },
+      "id": 31,
+      "options": {
+        "showLabels": false,
+        "showTime": true,
+        "wrapLogMessage": false
+      },
+      "targets": [
+        {
+          "bucketAggs": [],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "logs"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "search - Web Access (service.name, @log_type, source.ip, source.geo.country_name, http.request.method, url.path, http.response.status_code, url.query, url.extension)",
+      "type": "logs"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 24,
+        "w": 24,
+        "x": 0,
+        "y": 163
+      },
+      "id": 32,
+      "options": {
+        "showLabels": false,
+        "showTime": true,
+        "wrapLogMessage": false
+      },
+      "targets": [
+        {
+          "bucketAggs": [],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "logs"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "search - Web Error (service.name, @log_type, source.ip, log.level, error.code, error.message)",
+      "type": "logs"
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "tags": [
+    "siem",
+    "converted-from-opensearch-dashboards"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Web Summary",
+  "uid": "siem-web-summary",
+  "version": 1,
+  "weekStart": ""
+}

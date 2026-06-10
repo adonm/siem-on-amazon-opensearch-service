@@ -1,0 +1,999 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {},
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "cloud.account.id",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            },
+            {
+              "field": "cloud.account.id",
+              "id": "3",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "AWSWAF - AWS Account(Bar)",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 2,
+      "options": {},
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "cloud.region",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            },
+            {
+              "field": "cloud.region",
+              "id": "3",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "AWSWAF - Region(Bar)",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 8,
+        "x": 0,
+        "y": 9
+      },
+      "id": 3,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "rule.name",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "5"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "AWSWAF - Executed WAF Rules",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 8,
+        "y": 9
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      },
+      "targets": [
+        {
+          "bucketAggs": [],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "AWSWAF - Number of All Requests",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 9
+      },
+      "id": 5,
+      "options": {
+        "content": "### AWSWAF - Allowed vs Blocked Requests\n\nOpenSearch Dashboards visualization type `timelion` has no automatic Grafana mapping.",
+        "mode": "markdown"
+      },
+      "targets": [],
+      "title": "AWSWAF - Allowed vs Blocked Requests",
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 8,
+        "y": 14
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      },
+      "targets": [
+        {
+          "bucketAggs": [],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "action:BLOCK",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "AWSWAF - Number of Blocked Requests",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 19
+      },
+      "id": 7,
+      "options": {
+        "content": "### AWSWAF - Filters\n\nOpenSearch Dashboards visualization type `input_control_vis` has no automatic Grafana mapping.",
+        "mode": "markdown"
+      },
+      "targets": [],
+      "title": "AWSWAF - Filters",
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 17,
+        "w": 24,
+        "x": 0,
+        "y": 28
+      },
+      "id": 8,
+      "options": {
+        "view": {
+          "id": "zero",
+          "lat": 0,
+          "lon": 0,
+          "zoom": 1
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "httpRequest.country",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "100"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "AWSWAF - Countries By Number of Request",
+      "type": "geomap"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 10,
+        "x": 0,
+        "y": 45
+      },
+      "id": 9,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "httpRequest.httpMethod",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "AWSWAF - HTTP Methods",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 10,
+        "x": 10,
+        "y": 45
+      },
+      "id": 10,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        }
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "httpRequest.httpVersion",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "AWSWAF - HTTP Versions",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 4,
+        "x": 20,
+        "y": 45
+      },
+      "id": 11,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto"
+      },
+      "targets": [
+        {
+          "bucketAggs": [],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "field": "httpRequest.clientIp",
+              "id": "1",
+              "type": "cardinality"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "AWSWAF - Unique IP Count",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 54
+      },
+      "id": 12,
+      "options": {
+        "content": "### AWSWAF - Requests Count\n\nOpenSearch Dashboards visualization type `timelion` has no automatic Grafana mapping.",
+        "mode": "markdown"
+      },
+      "targets": [],
+      "title": "AWSWAF - Requests Count",
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 16,
+        "w": 10,
+        "x": 0,
+        "y": 63
+      },
+      "id": 13,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "httpRequest.uri",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "AWSWAF - Top 10 URI",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 16,
+        "w": 4,
+        "x": 10,
+        "y": 63
+      },
+      "id": 14,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "httpRequest.clientIp",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "AWSWAF - Top 10 IP Addresses",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 16,
+        "w": 4,
+        "x": 14,
+        "y": 63
+      },
+      "id": 15,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "httpRequest.country",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "AWSWAF - Top 10 Countries",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 16,
+        "w": 6,
+        "x": 18,
+        "y": 63
+      },
+      "id": 16,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "rule.ruleset",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "AWSWAF - Top 10 WebACL",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 16,
+        "w": 10,
+        "x": 0,
+        "y": 79
+      },
+      "id": 17,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "user_agent.original",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "AWSWAF - Top 10 User-Agents",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 16,
+        "w": 8,
+        "x": 10,
+        "y": 79
+      },
+      "id": 18,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "url.domain",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "AWSWAF - Top 10 Hosts",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 16,
+        "w": 6,
+        "x": 18,
+        "y": 79
+      },
+      "id": 19,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "rule.name",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "missing": "",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "AWSWAF - Top 10 Rules",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-opensearch-datasource",
+        "uid": "siem-opensearch"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 21,
+        "w": 24,
+        "x": 0,
+        "y": 95
+      },
+      "id": 20,
+      "options": {
+        "showLabels": false,
+        "showTime": true,
+        "wrapLogMessage": false
+      },
+      "targets": [
+        {
+          "bucketAggs": [],
+          "datasource": {
+            "type": "grafana-opensearch-datasource",
+            "uid": "siem-opensearch"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "logs"
+            }
+          ],
+          "query": "",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "search - AWSWAF (cloud.account.id, cloud.region, httpSourceName, rule.ruleset, terminatingRuleId, action, source.ip, source.geo.country_name)",
+      "type": "logs"
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "tags": [
+    "siem",
+    "converted-from-opensearch-dashboards"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "AWSWAF Summary",
+  "uid": "siem-awswaf-summary",
+  "version": 1,
+  "weekStart": ""
+}

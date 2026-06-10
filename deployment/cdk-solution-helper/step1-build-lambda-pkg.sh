@@ -179,6 +179,12 @@ zip ../lambda/deploy_es/dashboard.serverless.zip -r each-dashboard
 zip ../lambda/deploy_es/dashboard.serverless.zip -r each-indexpattern-search
 cd ../lambda && echo "${PWD}"
 
+echo '# convert OpenSearch Dashboards saved objects to Grafana dashboards'
+python3 "${source_dir}/grafana/convert_saved_objects_to_grafana.py" \
+    --input "${source_dir}/saved_objects/each-dashboard" \
+    --catalog-root "${source_dir}/saved_objects" \
+    --output "${source_dir}/lambda/deploy_es/grafana_dashboards"
+
 echo "# start packing es_loader"
 pip_zip_for_lambda "es_loader"
 echo "# start packing add_pandas_layer"

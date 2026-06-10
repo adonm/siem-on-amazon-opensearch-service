@@ -38,11 +38,14 @@ helper_domain = CfnResource(json_logging=False, log_level='DEBUG',
                             boto_level='CRITICAL', sleep_on_delete=3)
 helper_config = CfnResource(json_logging=False, log_level='DEBUG',
                             boto_level='CRITICAL', sleep_on_delete=3)
+helper_grafana = CfnResource(json_logging=False, log_level='DEBUG',
+                             boto_level='CRITICAL', sleep_on_delete=3)
 
 iam_client = boto3.client('iam')
 s3_client = boto3.resource('s3')
 ec2_client = boto3.client('ec2')
 opensearch_client = boto3.client('opensearch')
+grafana_client = boto3.client('grafana')
 ssm_client = boto3.client('ssm')
 try:
     serverless_client = boto3.client('opensearchserverless')
@@ -60,7 +63,10 @@ except Exception as e:
     PARTITION = boto3.Session().get_partition_for_region('us-east-1')
 DEPLOYMENT_TARGET = os.getenv(
     'DEPLOYMENT_TARGET', 'opensearch_managed_cluster')
-# opensearch_managed_cluster or opensearch_serverless
+# opensearch_managed_cluster, opensearch_serverless, or
+# opensearch_serverless_nextgen
+AOSS_GENERATION = 'NEXTGEN' if DEPLOYMENT_TARGET.endswith('_nextgen') \
+    else 'CLASSIC'
 AOS_SUBNET_IDS = os.getenv('AOS_SUBNET_IDS')
 VPCE_ID = os.getenv('VPCE_ID')
 ENDPOINT = os.getenv('ENDPOINT', '')
@@ -83,6 +89,8 @@ RESTAPI_HEADERS = {'Content-Type': 'application/json'}
 AOS_SECURITY_GROUP_ID = os.getenv('AOS_SECURITY_GROUP_ID')
 S3_SNAPSHOT = os.getenv('S3_SNAPSHOT')
 S3_LOG = os.getenv('S3_LOG')
+GRAFANA_WORKSPACE_ID = os.getenv('GRAFANA_WORKSPACE_ID', '')
+GRAFANA_ENDPOINT = os.getenv('GRAFANA_ENDPOINT', '')
 LOGGROUP_RETENTIONS = [
     (f'/aws/OpenSearchService/domains/{AOS_DOMAIN}/application-logs', 14),
     ('/aws/lambda/aes-siem-add-pandas-layer', 180),
@@ -100,7 +108,8 @@ if ENDPOINT:
     AOS_SERVICE = ENDPOINT.split('.')[2]
 elif DEPLOYMENT_TARGET == 'opensearch_managed_cluster':
     AOS_SERVICE = 'es'
-elif DEPLOYMENT_TARGET == 'opensearch_serverless':
+elif DEPLOYMENT_TARGET in ('opensearch_serverless',
+                           'opensearch_serverless_nextgen'):
     AOS_SERVICE = 'aoss'
 else:
     AOS_SERVICE = ''
@@ -917,7 +926,8 @@ def aes_domain_create(event, context):
             logger.info(f'OpenSearch Domain "{AOS_DOMAIN}" already exists')
             create_new_domain = False
     elif AOS_SERVICE == 'aoss':
-        aoss = MyAoss(serverless_client, DOMAIN_OR_COLLECTION_NAME)
+        aoss = MyAoss(serverless_client, DOMAIN_OR_COLLECTION_NAME,
+                      AOSS_GENERATION)
         create_new_domain = aoss.check_collection_creating_necessity()
 
     helper_domain.Data.update({"create_new_domain": create_new_domain})
@@ -956,7 +966,8 @@ def aes_domain_poll_create(event, context):
     if not kibanapass:
         kibanapass = 'MASKED'
     if AOS_SERVICE == 'aoss':
-        aoss = MyAoss(serverless_client, DOMAIN_OR_COLLECTION_NAME)
+        aoss = MyAoss(serverless_client, DOMAIN_OR_COLLECTION_NAME,
+                      AOSS_GENERATION)
 
     if AOS_SERVICE == 'es' and create_new_domain:
         response = opensearch_client.describe_domain(DomainName=AOS_DOMAIN)
@@ -1060,7 +1071,8 @@ def aes_domain_update(event, context):
             raise Exception(f'{engine_version} is not supported version')
 
     elif AOS_SERVICE == 'aoss':
-        aoss = MyAoss(serverless_client, DOMAIN_OR_COLLECTION_NAME)
+        aoss = MyAoss(serverless_client, DOMAIN_OR_COLLECTION_NAME,
+                      AOSS_GENERATION)
         status = aoss.get_collection_status()
         if status != 'ACTIVE':
             raise Exception(
@@ -1168,6 +1180,143 @@ def aes_config_create_update(event, context):
 @helper_config.delete
 def aes_config_delete(event, context):
     logger.info("Got Delete. Nothing to delete")
+
+
+def grafana_handler(event, context):
+    if 'ResourceType' in event \
+            and event['ResourceType'] == 'AWS::CloudFormation::CustomResource':
+        helper_grafana(event, context)
+    else:
+        grafana_create_update(event, context)
+    return {"statusCode": 200}
+
+
+def _normalize_grafana_url(endpoint):
+    endpoint = endpoint.rstrip('/')
+    if endpoint.startswith('https://'):
+        return endpoint
+    return f'https://{endpoint}'
+
+
+def _get_or_create_grafana_service_account():
+    name = 'siem-dashboard-importer'
+    try:
+        response = grafana_client.create_workspace_service_account(
+            workspaceId=GRAFANA_WORKSPACE_ID,
+            name=name,
+            grafanaRole='ADMIN')
+        return response['id']
+    except grafana_client.exceptions.ConflictException:
+        response = grafana_client.list_workspace_service_accounts(
+            workspaceId=GRAFANA_WORKSPACE_ID,
+            maxResults=100)
+        for service_account in response.get('serviceAccounts', []):
+            if service_account.get('name') == name:
+                return service_account['id']
+        raise
+
+
+def _create_grafana_token(service_account_id):
+    response = grafana_client.create_workspace_service_account_token(
+        workspaceId=GRAFANA_WORKSPACE_ID,
+        serviceAccountId=service_account_id,
+        name=f'siem-import-{int(time.time())}',
+        secondsToLive=3600)
+    return response['serviceAccountToken']['key']
+
+
+def _grafana_api(method, path, token, payload=None):
+    url = f'{_normalize_grafana_url(GRAFANA_ENDPOINT)}{path}'
+    headers = {
+        'Authorization': f'Bearer {token}',
+        'Content-Type': 'application/json',
+    }
+    response = requests.request(
+        method, url, headers=headers, json=payload, timeout=30)
+    logger.debug(f'Grafana {method} {path}: {response.status_code}')
+    return response
+
+
+def _upsert_grafana_datasource(token):
+    datasource = {
+        'access': 'proxy',
+        'basicAuth': False,
+        'isDefault': True,
+        'jsonData': {
+            'database': 'log-*',
+            'flavor': 'opensearch',
+            'logLevelField': 'event.kind',
+            'logMessageField': '@message',
+            'sigV4Auth': True,
+            'sigV4AuthType': 'workspace-iam-role',
+            'sigV4Region': REGION,
+            'timeField': '@timestamp',
+            'version': '2.19.0',
+        },
+        'name': 'SIEM OpenSearch Serverless',
+        'type': 'grafana-opensearch-datasource',
+        'uid': 'siem-opensearch',
+        'url': f'https://{ENDPOINT}',
+    }
+    response = _grafana_api('POST', '/api/datasources', token, datasource)
+    if response.status_code in (200, 201):
+        return
+    if response.status_code == 409:
+        response = _grafana_api(
+            'PUT', '/api/datasources/uid/siem-opensearch', token, datasource)
+        if response.status_code in (200, 201):
+            return
+    raise Exception(
+        f'Failed to upsert Grafana datasource: '
+        f'{response.status_code} {response.text}')
+
+
+def _import_grafana_dashboards(token):
+    dashboard_dir = pathlib.Path(__file__).resolve().parent / 'grafana_dashboards'
+    for dashboard_path in sorted(dashboard_dir.glob('*.json')):
+        if dashboard_path.name == 'conversion_report.json':
+            continue
+        dashboard = json.loads(dashboard_path.read_text())
+        payload = {'dashboard': dashboard, 'overwrite': True, 'folderId': 0}
+        response = _grafana_api('POST', '/api/dashboards/db', token, payload)
+        if response.status_code not in (200, 201):
+            raise Exception(
+                f'Failed to import {dashboard_path.name}: '
+                f'{response.status_code} {response.text}')
+        logger.info(f'Imported Grafana dashboard {dashboard_path.name}')
+
+
+@helper_grafana.create
+@helper_grafana.update
+def grafana_create_update(event, context):
+    logger.info('Got Grafana Create/Update')
+    if event:
+        logger.debug(json.dumps(event, default=json_serial))
+
+    if not GRAFANA_WORKSPACE_ID or not GRAFANA_ENDPOINT:
+        raise Exception('Grafana workspace id or endpoint is empty')
+
+    response = grafana_client.describe_workspace(
+        workspaceId=GRAFANA_WORKSPACE_ID)
+    status = response['workspace']['status']
+    if status != 'ACTIVE':
+        logger.info(f'Grafana workspace status is {status}; polling')
+        return None
+
+    service_account_id = _get_or_create_grafana_service_account()
+    token = _create_grafana_token(service_account_id)
+    _upsert_grafana_datasource(token)
+    _import_grafana_dashboards(token)
+
+    suffix = ''.join(secrets.choice(string.ascii_uppercase) for i in range(8))
+    physical_resource_id = f'aes-siem-grafana-{__version__}-{suffix}'
+    logger.info('End Grafana Create/Update')
+    return physical_resource_id
+
+
+@helper_grafana.delete
+def grafana_delete(event, context):
+    logger.info('Got Grafana Delete. Nothing to delete')
 
 
 @helper_validation.delete

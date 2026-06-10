@@ -10,13 +10,16 @@ __url__ = 'https://github.com/aws-samples/siem-on-amazon-opensearch-service'
 import aws_cdk as cdk
 import boto3
 from aws_cdk import (
+    aws_cloudformation,
     aws_ec2,
     aws_events,
     aws_events_targets,
+    aws_grafana,
     aws_iam,
     aws_kms,
     aws_lambda,
     aws_lambda_event_sources,
+    aws_opensearchserverless,
     aws_s3,
     aws_s3_notifications,
     aws_sns,
@@ -270,12 +273,22 @@ class MyAesSiemStack(cdk.Stack):
         deployment_target = cdk.CfnParameter(
             self, 'DeploymentTarget',
             allowed_values=['opensearch_managed_cluster',
-                            'opensearch_serverless'],
-            # managed_cluster or serverless
+                            'opensearch_serverless',
+                            'opensearch_serverless_nextgen'],
+            # managed_cluster, serverless classic, or serverless nextgen
             description=('Where would you like to deploy the SIEM solution? '
-                         'Amazon OpenSearch managed cluster or serverless? '
-                         'Serverless is experimental option'),
-            default='opensearch_managed_cluster')
+                         'Amazon OpenSearch managed cluster, OpenSearch '
+                         'Serverless Classic, or OpenSearch Serverless '
+                         'NextGen?'),
+            default='opensearch_serverless_nextgen')
+
+        create_grafana_workspace = cdk.CfnParameter(
+            self, 'CreateGrafanaWorkspace',
+            allowed_values=['true', 'false'],
+            description=('Create an Amazon Managed Grafana workspace for the '
+                         'SIEM dashboards. Requires IAM Identity Center in '
+                         'this account/Region.'),
+            default='true')
 
         domain_or_collection_name = cdk.CfnParameter(
             self, 'DomainOrCollectionName', allowed_pattern=r'^[0-9a-zA-Z_-]*',
@@ -471,10 +484,11 @@ class MyAesSiemStack(cdk.Stack):
                     {'Label': {'default': 'Initial Deployment Parameters'},
                      'Parameters': [allow_source_address.logical_id]},
                     {'Label': {'default': 'Basic Configuration'},
-                     'Parameters': [deployment_target.logical_id,
-                                    domain_or_collection_name.logical_id,
-                                    sns_email.logical_id,
-                                    reserved_concurrency.logical_id]},
+                      'Parameters': [deployment_target.logical_id,
+                                     domain_or_collection_name.logical_id,
+                                     create_grafana_workspace.logical_id,
+                                     sns_email.logical_id,
+                                     reserved_concurrency.logical_id]},
                     {'Label': {'default': 'Log Enrichment - optional'},
                      'Parameters': [geoip_license_key.logical_id,
                                     trusted_proxy_list.logical_id,
@@ -624,9 +638,28 @@ class MyAesSiemStack(cdk.Stack):
 
         is_serverless = cdk.CfnCondition(
             self, 'IsServerless',
+            expression=cdk.Fn.condition_or(
+                cdk.Fn.condition_equals(
+                    deployment_target.value_as_string,
+                    'opensearch_serverless'),
+                cdk.Fn.condition_equals(
+                    deployment_target.value_as_string,
+                    'opensearch_serverless_nextgen'))
+        )
+
+        is_serverless_nextgen = cdk.CfnCondition(
+            self, 'IsServerlessNextGen',
             expression=cdk.Fn.condition_equals(
                 deployment_target.value_as_string,
-                'opensearch_serverless')
+                'opensearch_serverless_nextgen')
+        )
+
+        enable_managed_grafana = cdk.CfnCondition(
+            self, 'EnableManagedGrafana',
+            expression=cdk.Fn.condition_and(
+                is_serverless_nextgen,
+                cdk.Fn.condition_equals(
+                    create_grafana_workspace.value_as_string, 'true'))
         )
 
         is_managed_cluster = cdk.CfnCondition(
@@ -765,6 +798,8 @@ class MyAesSiemStack(cdk.Stack):
             'is_china_region': is_china_region,
             'has_lambda_architectures_prop': has_lambda_architectures_prop,
             'is_serverless': is_serverless,
+            'is_serverless_nextgen': is_serverless_nextgen,
+            'enable_managed_grafana': enable_managed_grafana,
             'is_managed_cluster': is_managed_cluster,
             'has_vpce': has_vpce,
             'is_in_vpc': is_in_vpc,
@@ -1842,6 +1877,164 @@ class MyAesSiemStack(cdk.Stack):
         cw_dashbaord.create_cloudwatch_dashboard()
 
         ######################################################################
+        # Amazon Managed Grafana for OpenSearch Serverless NextGen
+        ######################################################################
+        grafana_workspace_role = aws_iam.Role(
+            self, 'AesSiemGrafanaWorkspaceRole',
+            role_name='aes-siem-grafana-workspace-role',
+            assumed_by=aws_iam.ServicePrincipal('grafana.amazonaws.com'),
+            inline_policies={
+                'cloudwatch_datasource': aws_iam.PolicyDocument(
+                    statements=[
+                        aws_iam.PolicyStatement(
+                            actions=[
+                                'cloudwatch:DescribeAlarmHistory',
+                                'cloudwatch:DescribeAlarms',
+                                'cloudwatch:DescribeAlarmsForMetric',
+                                'cloudwatch:GetInsightRuleReport',
+                                'cloudwatch:GetMetricData',
+                                'cloudwatch:ListMetrics',
+                                'logs:DescribeLogGroups',
+                                'logs:GetLogEvents',
+                                'logs:GetLogGroupFields',
+                                'logs:GetQueryResults',
+                                'logs:StartQuery',
+                                'logs:StopQuery',
+                            ],
+                            resources=['*'])]),
+                'opensearch_datasource': aws_iam.PolicyDocument(
+                    statements=[
+                        aws_iam.PolicyStatement(
+                            actions=[
+                                'es:ESHttpGet',
+                                'es:ESHttpHead',
+                                'es:ESHttpPost',
+                            ],
+                            resources=[f'{aos_domain_arn}/*']),
+                        aws_iam.PolicyStatement(
+                            actions=['aoss:APIAccessAll'],
+                            resources=[collection_arn]),
+                    ]),
+            })
+        grafana_workspace_role.node.default_child.cfn_options.condition = (
+            enable_managed_grafana)
+
+        aoss_data_policy_for_grafana = [
+            {
+                'Description': 'For Amazon Managed Grafana',
+                'Principal': [grafana_workspace_role.role_arn],
+                'Rules': [
+                    {
+                        'Resource': [
+                            f'collection/{domain_or_collection_name.value_as_string}'
+                        ],
+                        'Permission': ['aoss:DescribeCollectionItems'],
+                        'ResourceType': 'collection'
+                    },
+                    {
+                        'Resource': [
+                            f'index/{domain_or_collection_name.value_as_string}/*'
+                        ],
+                        'Permission': [
+                            'aoss:DescribeIndex',
+                            'aoss:ReadDocument'
+                        ],
+                        'ResourceType': 'index'
+                    }
+                ]
+            }
+        ]
+        cfn_access_policy_grafana = (
+            aws_opensearchserverless.CfnAccessPolicy(
+                self, 'AossDataAccessPolicyForGrafana',
+                description='Created By SIEM Solution. DO NOT EDIT',
+                name='siem-data-access-for-grafana',
+                policy=cdk.Fn.to_json_string(aoss_data_policy_for_grafana),
+                type='data'))
+        cfn_access_policy_grafana.cfn_options.condition = (
+            enable_managed_grafana)
+
+        grafana_workspace = aws_grafana.CfnWorkspace(
+            self, 'AesSiemGrafanaWorkspace',
+            account_access_type='CURRENT_ACCOUNT',
+            authentication_providers=['AWS_SSO'],
+            data_sources=['AMAZON_OPENSEARCH_SERVICE', 'CLOUDWATCH'],
+            description=(f'{SOLUTION_NAME} / Amazon Managed Grafana '
+                         'workspace'),
+            name=f'{solution_prefix}-grafana',
+            permission_type='CUSTOMER_MANAGED',
+            role_arn=grafana_workspace_role.role_arn)
+        grafana_workspace.cfn_options.condition = enable_managed_grafana
+
+        grafana_import_role = aws_iam.Role(
+            self, 'AesSiemGrafanaImportRoleForLambda',
+            role_name='aes-siem-grafana-import-role-for-lambda',
+            managed_policies=[
+                aws_iam.ManagedPolicy.from_aws_managed_policy_name(
+                    'service-role/AWSLambdaBasicExecutionRole'),
+            ],
+            inline_policies={
+                'grafana_import': aws_iam.PolicyDocument(
+                    statements=[
+                        aws_iam.PolicyStatement(
+                            actions=[
+                                'grafana:CreateWorkspaceServiceAccount',
+                                'grafana:CreateWorkspaceServiceAccountToken',
+                                'grafana:DescribeWorkspace',
+                                'grafana:ListWorkspaceServiceAccounts',
+                            ],
+                            resources=['*'])])},
+            assumed_by=aws_iam.ServicePrincipal('lambda.amazonaws.com'))
+        grafana_import_role.node.default_child.cfn_options.condition = (
+            enable_managed_grafana)
+
+        function_name = 'aes-siem-import-grafana-dashboards'
+        lambda_import_grafana_dashboards = aws_lambda.Function(
+            self, 'LambdaImportGrafanaDashboards',
+            function_name=function_name,
+            description=(f'{SOLUTION_NAME} / import grafana dashboards'),
+            runtime=aws_lambda.Runtime.PYTHON_3_11,
+            code=aws_lambda.Code.from_asset('../lambda/deploy_es'),
+            handler='index.grafana_handler',
+            memory_size=256,
+            timeout=cdk.Duration.seconds(600),
+            reserved_concurrent_executions=1,
+            environment={
+                'ACCOUNT_ID': cdk.Aws.ACCOUNT_ID,
+                'DEPLOYMENT_TARGET': deployment_target.value_as_string,
+                'DOMAIN_OR_COLLECTION_NAME': (
+                    domain_or_collection_name.value_as_string),
+                'ENDPOINT': endpoint,
+                'GRAFANA_ENDPOINT': grafana_workspace.attr_endpoint,
+                'GRAFANA_WORKSPACE_ID': grafana_workspace.ref,
+                'SOLUTION_PREFIX': solution_prefix,
+            },
+            role=grafana_import_role,
+            current_version_options=aws_lambda.VersionOptions(
+                removal_policy=cdk.RemovalPolicy.RETAIN,
+                description=__version__))
+        if not same_lambda_func_version(function_name):
+            lambda_import_grafana_dashboards.current_version
+        lambda_import_grafana_dashboards.node.default_child.cfn_options.condition = (  # noqa: E501
+            enable_managed_grafana)
+        lambda_import_grafana_dashboards.node.default_child.add_property_override(
+            'Architectures',
+            cdk.Fn.condition_if(
+                has_lambda_architectures_prop.logical_id,
+                [region_mapping.find_in_map(cdk.Aws.REGION, 'LambdaArch')],
+                cdk.Aws.NO_VALUE))
+
+        grafana_config = aws_cloudformation.CfnCustomResource(
+            self, 'AesSiemGrafanaDashboardsImported',
+            service_token=lambda_import_grafana_dashboards.function_arn)
+        grafana_config.add_override('Properties.ConfigVersion', __version__)
+        grafana_config.add_override(
+            'Properties.WorkspaceId', grafana_workspace.ref)
+        grafana_config.add_dependency(grafana_workspace)
+        grafana_config.add_dependency(cfn_access_policy_grafana)
+        grafana_config.cfn_options.condition = enable_managed_grafana
+
+        ######################################################################
         # output of CFn
         ######################################################################
         kibanaurl = f'https://{endpoint}/_dashboards/'
@@ -1858,6 +2051,12 @@ class MyAesSiemStack(cdk.Stack):
                                    'Dashboards ASAP'))
         cdk.CfnOutput(self, 'DashboardsAdminID',
                       export_name='dashboards-admin', value=kibanaadmin)
+        cdk.CfnOutput(
+            self, 'GrafanaWorkspaceUrl', export_name='grafana-workspace-url',
+            value=cdk.Fn.condition_if(
+                enable_managed_grafana.logical_id,
+                grafana_workspace.attr_endpoint,
+                'NOT_CREATED').to_string())
 
     def list_without_none(self, *args):
         list_args = []

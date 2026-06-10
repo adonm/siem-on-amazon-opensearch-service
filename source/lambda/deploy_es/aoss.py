@@ -10,15 +10,33 @@ __url__ = 'https://github.com/aws-samples/siem-on-amazon-opensearch-service'
 
 import json
 import logging
+import re
 
 logger = logging.getLogger(__name__)
 
 
 class MyAoss:
 
-    def __init__(self, client, collection_name):
+    def __init__(self, client, collection_name, generation='CLASSIC'):
         self.client = client
         self.col_name = collection_name
+        self.generation = generation
+
+    @property
+    def is_nextgen(self):
+        return self.generation == 'NEXTGEN'
+
+    @property
+    def collection_group_name(self):
+        # OpenSearch Serverless collection group names must start with a
+        # lowercase letter and contain only lowercase letters, numbers, and
+        # hyphens. Keep this deterministic so stack updates target the same
+        # group for a given collection name.
+        normalized = re.sub(r'[^a-z0-9-]+', '-', self.col_name.lower())
+        normalized = normalized.strip('-')
+        if not normalized or not normalized[0].isalpha():
+            normalized = f'a-{normalized}'
+        return f'nextgen-{normalized}'[:32].rstrip('-')
 
     def check_collection_creating_necessity(self):
         response = self.client.batch_get_collection(
@@ -30,6 +48,28 @@ class MyAoss:
             logger.info('Collection already exists')
             create_new_domain = False
         return create_new_domain
+
+    def _check_collection_group_creating_necessity(self):
+        response = self.client.batch_get_collection_group(
+            names=[self.collection_group_name])
+        if len(response['collectionGroupDetails']) == 0:
+            logger.info('Collection group not found')
+            return True
+        logger.info('Collection group already exists')
+        return False
+
+    def _create_collection_group(self):
+        if not self.is_nextgen:
+            return
+        if not self._check_collection_group_creating_necessity():
+            return
+        response = self.client.create_collection_group(
+            description='Created By SIEM Solution',
+            generation='NEXTGEN',
+            name=self.collection_group_name,
+            standbyReplicas='DISABLED',
+        )
+        logger.debug(response)
 
     def _configure_aoss_encryption_policy(self):
         logger.info('Configure encryption policy for OpenSearch Serverless')
@@ -113,15 +153,24 @@ class MyAoss:
         return is_successful
 
     def create_collection(self, vpce_id):
+        if self.is_nextgen:
+            self._create_collection_group()
         is_successful = self._configure_aoss_encryption_policy()
         if is_successful:
             is_successful = self._configure_aoss_network_policy(vpce_id)
         if is_successful:
-            response = self.client.create_collection(
-                description='Created By SIEM Solution',
-                name=self.col_name,
-                type='TIMESERIES'
-            )
+            collection_config = {
+                'description': 'Created By SIEM Solution',
+                'name': self.col_name,
+                'type': 'SEARCH' if self.is_nextgen else 'TIMESERIES'
+            }
+            if self.is_nextgen:
+                collection_config.update({
+                    'collectionGroupName': self.collection_group_name,
+                    'encryptionConfig': {'aWSOwnedKey': True},
+                    'standbyReplicas': 'DISABLED',
+                })
+            response = self.client.create_collection(**collection_config)
             logger.debug(response)
 
     def update_collection(self, vpce_id):
