@@ -14,7 +14,8 @@ resource "aws_osis_pipeline" "direct" {
     region              = var.aws_region
     osis_role_arn       = aws_iam_role.osis.arn
     collection_endpoint = aws_opensearchserverless_collection.this.collection_endpoint
-    index_prefix        = "log-direct"
+    index_prefix        = var.direct_index_prefix
+    log_type            = "direct"
     codec               = var.osis_direct_codec
   })
 
@@ -49,7 +50,8 @@ resource "aws_osis_pipeline" "security_lake" {
     region              = var.aws_region
     osis_role_arn       = aws_iam_role.osis.arn
     collection_endpoint = aws_opensearchserverless_collection.this.collection_endpoint
-    index_prefix        = "log-ocsf-securitylake"
+    index_prefix        = var.security_lake_index_prefix
+    log_type            = "securitylake"
     codec               = var.security_lake_codec
   })
 

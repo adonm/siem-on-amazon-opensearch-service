@@ -8,19 +8,55 @@ resource "aws_grafana_workspace" "this" {
   data_sources             = ["AMAZON_OPENSEARCH_SERVICE", "CLOUDWATCH"]
 }
 
-resource "terraform_data" "grafana_import" {
-  count = var.create_grafana_workspace && var.import_grafana_dashboards ? 1 : 0
+resource "aws_grafana_workspace_service_account" "terraform" {
+  count        = var.create_grafana_workspace && var.manage_grafana_dashboards ? 1 : 0
+  workspace_id = aws_grafana_workspace.this[0].id
+  name         = "siem-terraform"
+  grafana_role = "ADMIN"
+}
 
-  input = {
-    workspace_id        = aws_grafana_workspace.this[0].id
-    workspace_endpoint  = aws_grafana_workspace.this[0].endpoint
-    collection_endpoint = aws_opensearchserverless_collection.this.collection_endpoint
-    dashboards_hash     = filesha256("${path.module}/grafana_dashboards/conversion_report.json")
-  }
+resource "aws_grafana_workspace_service_account_token" "terraform" {
+  count              = var.create_grafana_workspace && var.manage_grafana_dashboards ? 1 : 0
+  workspace_id       = aws_grafana_workspace.this[0].id
+  service_account_id = aws_grafana_workspace_service_account.terraform[0].service_account_id
+  name               = "siem-terraform"
+  seconds_to_live    = 2592000
+}
 
-  provisioner "local-exec" {
-    command = "python3 ${path.module}/scripts/import_grafana_dashboards.py --workspace-id ${self.input.workspace_id} --workspace-endpoint ${self.input.workspace_endpoint} --opensearch-endpoint ${self.input.collection_endpoint} --region ${var.aws_region} --dashboards-dir ${path.module}/grafana_dashboards"
-  }
+resource "grafana_data_source" "opensearch" {
+  count    = var.create_grafana_workspace && var.manage_grafana_dashboards ? 1 : 0
+  provider = grafana.managed
+
+  uid         = "siem-opensearch"
+  name        = "SIEM OpenSearch Serverless"
+  type        = "grafana-opensearch-datasource"
+  url         = aws_opensearchserverless_collection.this.collection_endpoint
+  is_default  = true
+  access_mode = "proxy"
+
+  json_data_encoded = jsonencode({
+    database        = "log-*"
+    flavor          = "opensearch"
+    sigV4Auth       = true
+    sigV4AuthType   = "workspace-iam-role"
+    sigV4Region     = var.aws_region
+    timeField       = "@timestamp"
+    version         = "2.19.0"
+    logMessageField = "@message"
+  })
 
   depends_on = [aws_opensearchserverless_access_policy.data]
+}
+
+resource "grafana_dashboard" "converted" {
+  for_each = toset(var.create_grafana_workspace && var.manage_grafana_dashboards ? [
+    for file in fileset("${path.module}/grafana_dashboards", "*.json") : file
+    if file != "conversion_report.json"
+  ] : [])
+  provider = grafana.managed
+
+  config_json = file("${path.module}/grafana_dashboards/${each.key}")
+  overwrite   = true
+
+  depends_on = [grafana_data_source.opensearch]
 }

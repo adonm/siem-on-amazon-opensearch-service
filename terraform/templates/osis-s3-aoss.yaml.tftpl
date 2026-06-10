@@ -4,6 +4,7 @@ ${pipeline_name}:
     s3:
       acknowledgments: true
       notification_type: "sqs"
+      metadata_root_key: "s3"
       compression: "automatic"
       codec:
         ${codec}:
@@ -12,6 +13,20 @@ ${pipeline_name}:
       aws:
         region: "${region}"
         sts_role_arn: "${osis_role_arn}"
+  processor:
+    - add_entries:
+        entries:
+          - key: "@log_type"
+            value: "${log_type}"
+            overwrite_if_key_exists: true
+          - key: "@log_s3bucket"
+            value_expression: "/s3/bucket"
+            add_when: "/s3/bucket != null"
+            overwrite_if_key_exists: true
+          - key: "@log_s3key"
+            value_expression: "/s3/key"
+            add_when: "/s3/key != null"
+            overwrite_if_key_exists: true
   sink:
     - opensearch:
         hosts:

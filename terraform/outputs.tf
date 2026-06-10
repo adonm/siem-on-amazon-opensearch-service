@@ -25,3 +25,8 @@ output "osis_security_lake_pipeline_arn" {
 output "grafana_workspace_endpoint" {
   value = try(aws_grafana_workspace.this[0].endpoint, null)
 }
+
+output "recommended_log_sources" {
+  description = "Retained high-value source-to-index hints from the old loader."
+  value       = local.recommended_log_sources
+}

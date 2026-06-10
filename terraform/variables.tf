@@ -51,6 +51,12 @@ variable "osis_direct_codec" {
   default     = "json"
 }
 
+variable "direct_index_prefix" {
+  description = "OpenSearch index prefix for the generic direct OSIS pipeline."
+  type        = string
+  default     = "log-aws-generic"
+}
+
 variable "enable_security_lake_fallback" {
   description = "Create a second OSIS pipeline that consumes an existing Security Lake subscriber SQS queue."
   type        = bool
@@ -81,14 +87,20 @@ variable "security_lake_codec" {
   default     = "parquet"
 }
 
+variable "security_lake_index_prefix" {
+  description = "OpenSearch index prefix for the Security Lake fallback pipeline."
+  type        = string
+  default     = "log-ocsf-securitylake"
+}
+
 variable "create_grafana_workspace" {
   description = "Create Amazon Managed Grafana. Requires IAM Identity Center in this account/Region."
   type        = bool
   default     = true
 }
 
-variable "import_grafana_dashboards" {
-  description = "Run the local Grafana API importer after workspace creation. Requires python3, boto3, and requests on the Terraform runner."
+variable "manage_grafana_dashboards" {
+  description = "Manage the OpenSearch datasource and converted dashboards with the Terraform Grafana provider."
   type        = bool
   default     = true
 }

@@ -13,8 +13,8 @@ endpoint matrix, and no Lambda log-loader workers.
 - Amazon OpenSearch Ingestion pipeline for direct S3/SQS ingestion.
 - Optional second OpenSearch Ingestion pipeline for an existing Amazon Security
   Lake subscriber SQS queue as an OCSF fallback path.
-- Optional Amazon Managed Grafana workspace plus local dashboard import using
-  the generated Grafana dashboards in `terraform/grafana_dashboards`.
+- Optional Amazon Managed Grafana workspace plus Terraform-managed datasource
+  and dashboards from `terraform/grafana_dashboards`.
 
 ## Assumptions
 
@@ -23,8 +23,8 @@ endpoint matrix, and no Lambda log-loader workers.
   pipeline so Security Lake performs OCSF normalization.
 - Managed Grafana uses IAM Identity Center (`AWS_SSO`), which must be enabled in
   the target account/Region.
-- The Grafana dashboard importer runs on the Terraform runner and requires
-  `python3`, `boto3`, and `requests`.
+- Dashboard import is handled by Terraform providers; no local Python tooling is
+  required for the normal path.
 - Provider support for AOSS NextGen requires a recent AWS provider (`>= 6.28`).
 
 ## Usage
@@ -52,6 +52,9 @@ terraform apply \
 - OSIS replaces Lambda/EKS ingestion workers.
 - Security Lake is the preferred fallback for services/logs that require deeper
   normalization than the generic direct pipeline.
-- Grafana dashboards are generated from the OpenSearch Dashboards saved objects;
+- The old loader's most useful routing knowledge is retained as the
+  `recommended_log_sources` Terraform output; producers should prefer those
+  prefixes/index families or Security Lake OCSF where possible.
+- Grafana dashboards were generated from the OpenSearch Dashboards saved objects;
   unsupported visualization types are kept as text/note panels rather than
   failing the deployment.
