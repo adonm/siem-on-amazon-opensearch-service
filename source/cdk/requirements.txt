@@ -1,2 +1,0 @@
-boto3
-aws-cdk-lib==2.199.0

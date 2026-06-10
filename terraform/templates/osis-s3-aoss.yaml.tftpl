@@ -1,0 +1,23 @@
+version: "2"
+${pipeline_name}:
+  source:
+    s3:
+      acknowledgments: true
+      notification_type: "sqs"
+      compression: "automatic"
+      codec:
+        ${codec}:
+      sqs:
+        queue_url: "${sqs_queue_url}"
+      aws:
+        region: "${region}"
+        sts_role_arn: "${osis_role_arn}"
+  sink:
+    - opensearch:
+        hosts:
+          - "${collection_endpoint}"
+        index: "${index_prefix}-%%{yyyy.MM.dd}"
+        aws:
+          region: "${region}"
+          sts_role_arn: "${osis_role_arn}"
+          serverless: true

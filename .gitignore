@@ -1,226 +1,27 @@
-# python libs
-bin/
-aioboto3*
-aiobotocore*
-aiofiles*
-aiohappyeyeballs*
-aiohttp*
-aioitertool*
-aiosignal*
-async_timeout*
-asynctest*
-attr*
-aws_lambda_powertools*
-aws_xray_sdk*
-boto3*
-botocore*
-certifi*
-chardet*
-charset_normalizer*
-crhelper*
-elasticsearch*
-Events-*
-events
-fastjsonschema*
-frozenlist*
-geoip2*
-idna*
-ijson*
-jmespath*
-jsonpickle*
-libfuturize*
-libpasteurize*
-maxminddb*
-multidict*
-opensearch_py*
-opensearchpy
-past*
-propcache*
-python_dateutil-2.8.1*
-requests*
-s3transfer*
-setuptools*
-typing_extensions*
-ua_parser*
-urllib3*
-wrapt*
-xmltodict*
-yarl*
+# Terraform local state and provider cache
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraform.tfstate.lock.info
 
-# AWS CDK
-cdk.context.json
-cdk.json
-cdk.out
+# Local secrets/variable overrides
+*.auto.tfvars
+*.auto.tfvars.json
+terraform.tfvars
+terraform.tfvars.json
+.env
 
-# deploy
-deployment/open-source/
-add_pandas_layer.zip
-aws_api_caller.zip
-es_loader.zip
-es_loader_stopper.zip
-geoip_downloader.zip
-ioc_database.zip
-deploy_es.zip
-index_china.py
-restore_samplelog.zip
-siemlog.zip
-index_metrics_exporter.zip
-user.ini
-aes.ini
-global-s3-assets
-regional-s3-assets
-Lambda*.zip
-dashboard.ndjson.zip
-dashboard.serverless.zip
-
-# working files
-.lambda38/
-.lambda39/
-.lambda311/
-.DS_Store
-temp/
-work/
-source/lambda/es_loader/*.log
-
-# Byte-compiled / optimized / DLL files
+# Python/local tooling
 __pycache__/
 *.py[cod]
-*$py.class
-
-# C extensions
-*.so
-
-# Distribution / packaging
-.python-version
-.Python
-_distutils_hack
-distutils-precedence.pth
-build/
-develop-eggs/
-pkg_resources/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
-cover/
-
-# Translations
-*.mo
-*.pot
-
-# Django stuff:
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-
-# Flask stuff:
-instance/
-.webassets-cache
-
-# Scrapy stuff:
-.scrapy
-
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-.pybuilder/
-target/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
-
-# pyenv
-#   For a library or package, you might want to ignore these files since the code is
-#   intended to run in multiple environments; otherwise, check them in:
-# .python-version
-
-# pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-#Pipfile.lock
-
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow
-__pypackages__/
-
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
-
-# SageMath parsed files
-*.sage.py
-
-# Environments
-.env
-.venv
-env/
+.venv/
 venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
+.pytest_cache/
 .mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
-
-# pytype static type analyzer
-.pytype/
-
-# Cython debug symbols
-cython_debug/
-
+.DS_Store

@@ -1,0 +1,129 @@
+[
+  {
+    "output": "terraform/grafana_dashboards/clientvpn-summary.json",
+    "panels": 20,
+    "title": "ClientVPN - Summary",
+    "unsupported": {}
+  },
+  {
+    "output": "terraform/grafana_dashboards/cloudfront-summary.json",
+    "panels": 25,
+    "title": "CloudFront Summary",
+    "unsupported": {}
+  },
+  {
+    "output": "terraform/grafana_dashboards/cloudhsm-summary.json",
+    "panels": 17,
+    "title": "CloudHSM Summary",
+    "unsupported": {
+      "input_control_vis": 1
+    }
+  },
+  {
+    "output": "terraform/grafana_dashboards/cloudtrail-summary.json",
+    "panels": 29,
+    "title": "CloudTrail Summary",
+    "unsupported": {}
+  },
+  {
+    "output": "terraform/grafana_dashboards/elb-summary.json",
+    "panels": 19,
+    "title": "ELB Summary",
+    "unsupported": {
+      "input_control_vis": 1
+    }
+  },
+  {
+    "output": "terraform/grafana_dashboards/guardduty-summary.json",
+    "panels": 21,
+    "title": "GuardDuty Summary",
+    "unsupported": {}
+  },
+  {
+    "output": "terraform/grafana_dashboards/opensearch-metrics.json",
+    "panels": 16,
+    "title": "OpenSearch Metrics",
+    "unsupported": {
+      "input_control_vis": 1,
+      "metrics": 4
+    }
+  },
+  {
+    "output": "terraform/grafana_dashboards/ocsf-auditactivity-summary.json",
+    "panels": 15,
+    "title": "OCSF AuditActivity Summary",
+    "unsupported": {}
+  },
+  {
+    "output": "terraform/grafana_dashboards/ocsf-networkactivity-summary.json",
+    "panels": 7,
+    "title": "OCSF NetworkActivity Summary",
+    "unsupported": {}
+  },
+  {
+    "output": "terraform/grafana_dashboards/rds-summary.json",
+    "panels": 13,
+    "title": "RDS Summary",
+    "unsupported": {
+      "input_control_vis": 1,
+      "metrics": 1
+    }
+  },
+  {
+    "output": "terraform/grafana_dashboards/s3accesslog-summary.json",
+    "panels": 17,
+    "title": "S3Accesslog Summary",
+    "unsupported": {}
+  },
+  {
+    "output": "terraform/grafana_dashboards/securityhub-summary.json",
+    "panels": 21,
+    "title": "SecurityHub Summary",
+    "unsupported": {
+      "input_control_vis": 1
+    }
+  },
+  {
+    "output": "terraform/grafana_dashboards/all-threat-hunting.json",
+    "panels": 17,
+    "title": "All - Threat Hunting",
+    "unsupported": {}
+  },
+  {
+    "output": "terraform/grafana_dashboards/vpcflowlogs-summary.json",
+    "panels": 11,
+    "title": "VPCFlowLogs Summary",
+    "unsupported": {}
+  },
+  {
+    "output": "terraform/grafana_dashboards/vpcflowlogscustom-summary-with-v5-custom.json",
+    "panels": 28,
+    "title": "VPCFlowLogsCustom Summary with v5 custom formats",
+    "unsupported": {}
+  },
+  {
+    "output": "terraform/grafana_dashboards/awswaf-summary.json",
+    "panels": 20,
+    "title": "AWSWAF Summary",
+    "unsupported": {
+      "input_control_vis": 1,
+      "timelion": 2
+    }
+  },
+  {
+    "output": "terraform/grafana_dashboards/web-summary.json",
+    "panels": 32,
+    "title": "Web Summary",
+    "unsupported": {
+      "input_control_vis": 1
+    }
+  },
+  {
+    "output": "terraform/grafana_dashboards/workspaces-summary.json",
+    "panels": 13,
+    "title": "WorkSpaces - Summary",
+    "unsupported": {
+      "input_control_vis": 1
+    }
+  }
+]
